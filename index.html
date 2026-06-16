@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -209,7 +210,58 @@
     <p class="section-sub">Answer 5 quick questions. Our AI builds your unique Shower DNA — a personalised profile that determines your ideal formula, tablet, and ritual.</p>
     <div class="dna-quiz" id="dna-quiz">
       <div class="quiz-progress"><div class="quiz-progress-bar" id="quiz-bar" style="width:20%"></div></div>
-      <div class="quiz-body" id="quiz-body"></div>
+      <div class="quiz-body" id="quiz-body">
+        <!-- Q1 -->
+        <div class="quiz-slide" id="qs-0">
+          <p class="quiz-q">How are you feeling today?<span>This shapes your ritual direction</span></p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="selectOpt(this,0,'Energised & ready')">Energised & ready</button>
+            <button class="quiz-opt" onclick="selectOpt(this,0,'Tired & slow')">Tired & slow</button>
+            <button class="quiz-opt" onclick="selectOpt(this,0,'Stressed & tense')">Stressed & tense</button>
+            <button class="quiz-opt" onclick="selectOpt(this,0,'Calm & balanced')">Calm & balanced</button>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="quiz-slide" id="qs-1" style="display:none">
+          <p class="quiz-q">How did you sleep last night?<span>Sleep quality affects your formula</span></p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="selectOpt(this,1,'Great 7-8 hours')">Great — 7-8 hours</button>
+            <button class="quiz-opt" onclick="selectOpt(this,1,'OK 5-6 hours')">OK — 5-6 hours</button>
+            <button class="quiz-opt" onclick="selectOpt(this,1,'Poor under 5 hours')">Poor — under 5 hours</button>
+            <button class="quiz-opt" onclick="selectOpt(this,1,'Excellent 9+ hours')">Excellent — 9+ hours</button>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="quiz-slide" id="qs-2" style="display:none">
+          <p class="quiz-q">What's your main goal today?<span>Your shower can be therapeutic</span></p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="selectOpt(this,2,'Focus & clarity')">Focus & clarity</button>
+            <button class="quiz-opt" onclick="selectOpt(this,2,'Relax & unwind')">Relax & unwind</button>
+            <button class="quiz-opt" onclick="selectOpt(this,2,'Recovery after sport')">Recovery after sport</button>
+            <button class="quiz-opt" onclick="selectOpt(this,2,'Skin & beauty care')">Skin & beauty care</button>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="quiz-slide" id="qs-3" style="display:none">
+          <p class="quiz-q">How would you describe your skin?<span>We'll match your botanical blend</span></p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="selectOpt(this,3,'Normal & balanced')">Normal & balanced</button>
+            <button class="quiz-opt" onclick="selectOpt(this,3,'Dry & tight')">Dry & tight</button>
+            <button class="quiz-opt" onclick="selectOpt(this,3,'Oily & prone to shine')">Oily & prone to shine</button>
+            <button class="quiz-opt" onclick="selectOpt(this,3,'Sensitive & reactive')">Sensitive & reactive</button>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="quiz-slide" id="qs-4" style="display:none">
+          <p class="quiz-q">What matters most to you?<span>Helps us complete your profile</span></p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="selectOpt(this,4,'Sustainability & eco')">Sustainability & eco</button>
+            <button class="quiz-opt" onclick="selectOpt(this,4,'Wellness & recovery')">Wellness & recovery</button>
+            <button class="quiz-opt" onclick="selectOpt(this,4,'Beauty & appearance')">Beauty & appearance</button>
+            <button class="quiz-opt" onclick="selectOpt(this,4,'Independence & ease')">Independence & ease</button>
+          </div>
+        </div>
+      </div>
       <div class="quiz-nav">
         <span class="quiz-step-label" id="quiz-step-label">Question 1 of 5</span>
         <button class="btn-primary" id="quiz-next" onclick="nextQuestion()" style="padding:9px 20px;font-size:14px;" disabled>Next →</button>
@@ -342,46 +394,27 @@ async function sendMsg() {
 function sendQuick(t) { document.getElementById('chat-input').value = t; sendMsg(); }
 
 // ── SHOWER DNA QUIZ ───────────────────────────────────────
-const questions = [
-  { q: "How are you feeling today?", hint: "This shapes your ritual direction", opts: ["Energised & ready", "Tired & slow", "Stressed & tense", "Calm & balanced"] },
-  { q: "How did you sleep last night?", hint: "Sleep quality affects your formula", opts: ["Great — 7-8 hours", "OK — 5-6 hours", "Poor — under 5 hours", "Excellent — 9+ hours"] },
-  { q: "What's your main goal today?", hint: "Your shower can be therapeutic", opts: ["Focus & clarity", "Relax & unwind", "Recovery after sport", "Skin & beauty care"] },
-  { q: "How would you describe your skin?", hint: "We'll match your botanical blend", opts: ["Normal & balanced", "Dry & tight", "Oily & prone to shine", "Sensitive & reactive"] },
-  { q: "What matters most to you?", hint: "Helps us complete your profile", opts: ["Sustainability & eco", "Wellness & recovery", "Beauty & appearance", "Independence & ease"] }
-];
-
-const dnaProfiles = {
-  recovery: { label: "Recovery Warrior", color: "#1D9E75", rec: "Today you need the Eucalyptus + Magnesium recovery blend. Run your Mistu Infuser at warm temperature for 5 minutes, then finish with 30 seconds cold. This combination reduces muscle tension and resets your nervous system." },
-  focus: { label: "Focus Seeker", color: "#534AB7", rec: "Start with a Peppermint + Citrus energising tablet. A 4-minute brisk shower with a cool finish will sharpen your mind and prepare you for a high-performance day." },
-  relax: { label: "Calm Seeker", color: "#D4537E", rec: "Your profile calls for a Lavender + Chamomile evening blend. A slow 7-minute warm shower before bed will lower cortisol and prepare your body for deep sleep." },
-  beauty: { label: "Beauty Ritualist", color: "#BA7517", rec: "Your skin will love the Rose + Argan botanical blend. Use your Mistu Infuser at comfortable warm temperature for 6 minutes. Your hair and skin will absorb the concentrated nourishment." }
-];
 
 let currentQ = 0;
 let answers = [];
 
-function renderQuestion() {
-  const q = questions[currentQ];
-  const body = document.getElementById('quiz-body');
-  body.innerHTML = `<p class="quiz-q">${q.q}<span>${q.hint}</span></p><div class="quiz-options">${q.opts.map((o,i) => `<button class="quiz-opt" onclick="selectOpt(this,'${o}')">${o}</button>`).join('')}</div>`;
-  document.getElementById('quiz-bar').style.width = ((currentQ+1)/questions.length*100)+'%';
-  document.getElementById('quiz-step-label').textContent = `Question ${currentQ+1} of ${questions.length}`;
-  document.getElementById('quiz-next').disabled = true;
-  // Scroll quiz into view on mobile
-  body.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-
-function selectOpt(el, val) {
-  document.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+function selectOpt(el, qIndex, val) {
+  const slide = document.getElementById('qs-' + qIndex);
+  slide.querySelectorAll('.quiz-opt').forEach(function(b) { b.classList.remove('selected'); });
   el.classList.add('selected');
-  answers[currentQ] = val;
+  answers[qIndex] = val;
   document.getElementById('quiz-next').disabled = false;
 }
 
 function nextQuestion() {
-  if (currentQ < questions.length - 1) {
+  if (currentQ < 4) {
+    document.getElementById('qs-' + currentQ).style.display = 'none';
     currentQ++;
-    renderQuestion();
+    document.getElementById('qs-' + currentQ).style.display = 'block';
+    document.getElementById('quiz-bar').style.width = ((currentQ+1)/5*100)+'%';
+    document.getElementById('quiz-step-label').textContent = 'Question '+(currentQ+1)+' of 5';
+    document.getElementById('quiz-next').disabled = true;
+    if (currentQ === 4) document.getElementById('quiz-next').textContent = 'See my results';
   } else {
     showResult();
   }
@@ -389,52 +422,54 @@ function nextQuestion() {
 
 function showResult() {
   document.getElementById('dna-quiz').style.display = 'none';
-  const result = document.getElementById('dna-result');
+  var result = document.getElementById('dna-result');
   result.classList.add('show');
-
-  const a2 = answers[2] || '';
-  let profileKey = 'relax';
-  if (a2.includes('Focus')) profileKey = 'focus';
-  else if (a2.includes('Recovery') || a2.includes('sport')) profileKey = 'recovery';
-  else if (a2.includes('beauty') || a2.includes('Skin')) profileKey = 'beauty';
-
-  const profile = dnaProfiles[profileKey];
-
-  const pcts = { Recovery: 0, Focus: 0, Relaxation: 0, Beauty: 0 };
-  if (profileKey === 'recovery') { pcts.Recovery = 45; pcts.Focus = 30; pcts.Relaxation = 15; pcts.Beauty = 10; }
-  else if (profileKey === 'focus') { pcts.Focus = 45; pcts.Recovery = 20; pcts.Relaxation = 25; pcts.Beauty = 10; }
-  else if (profileKey === 'relax') { pcts.Relaxation = 50; pcts.Focus = 15; pcts.Recovery = 20; pcts.Beauty = 15; }
-  else { pcts.Beauty = 45; pcts.Relaxation = 25; pcts.Recovery = 15; pcts.Focus = 15; }
-
-  document.getElementById('result-title').textContent = `You are a ${profile.label}`;
+  var a2 = answers[2] || '';
+  var profileKey = 'relax';
+  if (a2.indexOf('Focus') > -1) profileKey = 'focus';
+  else if (a2.indexOf('Recovery') > -1 || a2.indexOf('sport') > -1) profileKey = 'recovery';
+  else if (a2.indexOf('Beauty') > -1 || a2.indexOf('Skin') > -1) profileKey = 'beauty';
+  var profiles = {
+    recovery: { label: 'Recovery Warrior', rec: 'Today you need the Eucalyptus + Magnesium recovery blend. Run your Mistu Infuser at warm temperature for 5 minutes, then finish with 30 seconds cold. This combination reduces muscle tension and resets your nervous system.', pcts: {Recovery:45,Focus:30,Relaxation:15,Beauty:10} },
+    focus: { label: 'Focus Seeker', rec: 'Start with a Peppermint + Citrus energising tablet. A 4-minute brisk shower with a cool finish will sharpen your mind and prepare you for a high-performance day.', pcts: {Focus:45,Recovery:20,Relaxation:25,Beauty:10} },
+    relax: { label: 'Calm Seeker', rec: 'Your profile calls for a Lavender + Chamomile evening blend. A slow 7-minute warm shower before bed will lower cortisol and prepare your body for deep sleep.', pcts: {Relaxation:50,Focus:15,Recovery:20,Beauty:15} },
+    beauty: { label: 'Beauty Ritualist', rec: 'Your skin will love the Rose + Argan botanical blend. Use your Mistu Infuser at comfortable warm temperature for 6 minutes. Your hair and skin will absorb the concentrated nourishment.', pcts: {Beauty:45,Relaxation:25,Recovery:15,Focus:15} }
+  };
+  var profile = profiles[profileKey];
+  var colors = {Recovery:'#1D9E75',Focus:'#534AB7',Relaxation:'#D4537E',Beauty:'#BA7517'};
+  document.getElementById('result-title').textContent = 'You are a ' + profile.label;
   document.getElementById('result-sub').textContent = 'Your personalised Mistu Shower DNA profile';
-
-  const colors = { Recovery: '#1D9E75', Focus: '#534AB7', Relaxation: '#D4537E', Beauty: '#BA7517' };
-  document.getElementById('result-bars').innerHTML = Object.entries(pcts).map(([k,v]) =>
-    `<div class="dna-bar-row"><span class="dna-bar-label">${k}</span><div class="dna-bar-track"><div class="dna-bar-fill" style="width:${v}%;background:${colors[k]}"></div></div><span class="dna-bar-pct">${v}%</span></div>`
-  ).join('');
-
+  var barsHtml = '';
+  for (var k in profile.pcts) {
+    var v = profile.pcts[k];
+    barsHtml += '<div class="dna-bar-row"><span class="dna-bar-label">'+k+'</span><div class="dna-bar-track"><div class="dna-bar-fill" style="width:'+v+'%;background:'+colors[k]+'"></div></div><span class="dna-bar-pct">'+v+'%</span></div>';
+  }
+  document.getElementById('result-bars').innerHTML = barsHtml;
   document.getElementById('result-rec').textContent = profile.rec;
+  result.scrollIntoView({behavior:'smooth'});
 }
 
 function shareResult() {
-  const title = document.getElementById('result-title').textContent;
+  var title = document.getElementById('result-title').textContent;
   if (navigator.share) {
-    navigator.share({ title: 'My Mistu Shower DNA', text: `${title} — Discover yours at Mistu AI`, url: window.location.href });
+    navigator.share({ title: 'My Mistu Shower DNA', text: title + ' — Discover yours at Mistu AI', url: window.location.href });
   } else {
-    navigator.clipboard.writeText(`${title} — Discover your Shower DNA at ${window.location.href}`);
-    alert('Result copied to clipboard! Share it anywhere.');
+    alert('My Shower DNA: ' + title + ' — mistushower.ai');
   }
 }
 
 function restartQuiz() {
   currentQ = 0; answers = [];
+  for (var i=0; i<5; i++) document.getElementById('qs-'+i).style.display = i===0 ? 'block' : 'none';
   document.getElementById('dna-quiz').style.display = 'block';
   document.getElementById('dna-result').classList.remove('show');
-  renderQuestion();
+  document.getElementById('quiz-bar').style.width = '20%';
+  document.getElementById('quiz-step-label').textContent = 'Question 1 of 5';
+  document.getElementById('quiz-next').disabled = true;
+  document.getElementById('quiz-next').textContent = 'Next';
+  document.querySelectorAll('.quiz-opt').forEach(function(b) { b.classList.remove('selected'); });
 }
 
-renderQuestion();
 </script>
 </body>
 </html>
